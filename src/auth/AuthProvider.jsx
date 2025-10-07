@@ -1,11 +1,10 @@
 import { createContext, useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { api } from "../lib/api";
+import { useMe } from "../hooks/useAuth.js";  // ⬅️ reuse the hook
 
 const AuthCtx = createContext(null);
 export const useAuth = () => useContext(AuthCtx);
 
 export default function AuthProvider({ children }) {
-    const me = useQuery({ queryKey: ["me"], queryFn: api.me, retry: false });
+    const me = useMe();               // ⬅️ this already handles 401 → null
     return <AuthCtx.Provider value={me}>{children}</AuthCtx.Provider>;
 }

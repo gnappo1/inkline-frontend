@@ -65,6 +65,11 @@
   .btn-primary { @apply btn bg-brand text-white hover:brightness-110; }
   .btn-ghost   { @apply btn bg-transparent hover:bg-black/5 dark:hover:bg-white/10; }
 
+  .logout-btn {
+    color: hsl(var(--brand));
+    text-underline-offset: 4px;
+  }
+
   .input {
     @apply w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-black/20
            px-3 py-2 text-sm outline-none
@@ -103,4 +108,11 @@
       color-mix(in oklab, hsl(var(--brand)) 75%, white) 100%
     );
   }
+}
+
+.grad-text {
+  background-image: linear-gradient(90deg, var(--brand), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

@@ -1,3 +1,5 @@
+import { flattenNotes } from "./jsonapi"; // ⬅️ add this import
+
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
 async function request(path, opts = {}) {
@@ -19,12 +21,19 @@ export const api = {
     login: (email, password) => request("/login", { method: "POST", body: JSON.stringify({ user: { email, password } }) }),
     signup: (u) => request("/signup", { method: "POST", body: JSON.stringify({ user: u }) }),
     logout: () => request("/logout", { method: "DELETE" }),
+
     myNotes: () => request("/notes"),
     note: (id) => request(`/notes/${id}`),
     createNote: (note) => request("/notes", { method: "POST", body: JSON.stringify({ note }) }),
     updateNote: (id, note) => request(`/notes/${id}`, { method: "PATCH", body: JSON.stringify({ note }) }),
     deleteNote: (id) => request(`/notes/${id}`, { method: "DELETE" }),
-    feed: (params) => request("/feed/public" + (params ? `?${new URLSearchParams(params)}` : "")),
+
+    // ⬇️ only change: post-process JSON:API to flat
+    feed: async (params) => {
+        const json = await request("/feed/public" + (params ? `?${new URLSearchParams(params)}` : ""));
+        return flattenNotes(json); // => { data: [...], next_cursor, prev_cursor }
+    },
+
     friendships: (params) => request("/friendships" + (params ? `?${new URLSearchParams(params)}` : "")),
     createFriendship: (receiver_id) => request("/friendships", { method: "POST", body: JSON.stringify({ receiver_id }) }),
     actFriendship: (id, action) => request(`/friendships/${id}`, { method: "PATCH", body: JSON.stringify({ action }) }),
