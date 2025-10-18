@@ -6,6 +6,7 @@ import { useAuthActions } from "../../auth/hooks/useAuth";
 import { api } from "../../../shared/lib/api";
 import { Users, StickyNote, Lock, LockOpen } from "lucide-react";
 import { useToast } from "../../../shared/notifications/ToastProvider";
+import { Link } from "react-router";
 
 const squish = (v) => (typeof v === "string" ? v.replace(/\s+/g, " ").trim() : v);
 const normalizeEmail = (v) =>
@@ -69,14 +70,14 @@ function Profile() {
                     <StickyNote className="h-5 w-5 opacity-80" />
                     <div>
                         <div className="text-sm opacity-75">Notes</div>
-                        <div className="text-xl font-semibold">{summaryQ.data?.notes_count ?? "—"}</div>
+                        <Link to="/notes"><div className="text-xl font-semibold">{summaryQ.data?.notes_count ?? "—"}</div></Link>
                     </div>
                 </div>
                 <div className="flex items-center gap-3 rounded-xl border border-black/10 dark:border-white/10 bg-card p-4">
                     <Users className="h-5 w-5 opacity-80" />
                     <div>
                         <div className="text-sm opacity-75">Friends</div>
-                        <div className="text-xl font-semibold">{summaryQ.data?.friends_count ?? "—"}</div>
+                        <Link to="/friends"><div className="text-xl font-semibold">{summaryQ.data?.friends_count ?? "—"}</div></Link>
                     </div>
                 </div>
             </div>
