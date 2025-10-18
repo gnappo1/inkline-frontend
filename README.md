@@ -5,20 +5,20 @@ A modern React client for **Inkline** — write notes, publish to a public feed,
 
 ## Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Quick Start](#quick-start)
-- [Environment](#environment)
-- [Project Structure](#project-structure)
-- [Routing & Protection](#routing--protection)
-- [Data Layer (React Query)](#data-layer-react-query)
-- [API Conventions (Rails JSONAPI)](#api-conventions-rails-jsonapi)
-- [Forms & Validation](#forms--validation)
-- [Styling & Theming](#styling--theming)
-- [Accessibility](#accessibility)
-- [Production Build & Deploy](#production-build--deploy)
-- [Troubleshooting](#troubleshooting)
-- [Roadmap](#roadmap)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Quick Start](#-quick-start)
+- [Environment](#-environment)
+- [Project Structure](#-project-structure)
+- [Routing & Protection](#-routing--protection)
+- [Data Layer (React Query)](#-data-layer-react-query)
+- [API Conventions (Rails JSONAPI)](#-api-conventions-rails-jsonapi)
+- [Forms & Validation](#-forms--validation)
+- [Styling & Theming](#-styling--theming)
+- [Accessibility](#-accessibility)
+- [Production Build & Deploy](#-production-build--deploy)
+- [Troubleshooting](#-troubleshooting)
+- [Roadmap](#-roadmap)
 
 
 
