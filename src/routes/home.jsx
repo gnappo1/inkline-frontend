@@ -1,7 +1,7 @@
 import { Link } from "react-router";
-import { useScrollFriction } from "../hooks/useScrollFriction.js";
-import { useAuth } from "../auth/authProvider.jsx";
-import AnimatedHeadline from "./AnimatedHeadline.jsx";
+import { useScrollFriction } from "../shared/hooks/useScrollFriction.js";
+import { useAuth } from "../features/auth/components/AuthProvider.jsx";
+import AnimatedHeadline from "../shared/ui/AnimatedHeadline.jsx";
 import { motion } from "framer-motion";
 
 const heroUrl =

@@ -2,23 +2,23 @@ import { lazy, StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import AuthProvider from "./auth/authProvider.jsx";
-import RequireAuth from "./auth/RequireAuth.jsx";
-import App from "./App.jsx";
-import "./index.css";
-import ToastProvider from "./notifications/ToastProvider.jsx";
-import NewNoteForm from "./routes/NewNoteForm.jsx";
-import Profile from "./routes/Profile.jsx";
-import RequireGuest from "./auth/RequireGuest.jsx";
-import FriendPublicNotes from "./routes/FriendPublicNotes.jsx";
+import AuthProvider from "./features/auth/components/AuthProvider.jsx";
+import RequireAuth from "./features/auth/components/RequireAuth.jsx";
+import App from "./app/App.jsx";
+import "./app/index.css";
+import ToastProvider from "./shared/notifications/ToastProvider.jsx";
+import NewNoteForm from "./features/notes/routes/NewNoteForm.jsx";
+import Profile from "./features/profile/routes/Profile.jsx";
+import RequireGuest from "./features/auth/components/RequireGuest.jsx";
+import FriendPublicNotes from "./features/friendships/routes/FriendPublicNotes.jsx";
 
 const qc = new QueryClient();
 
 const Home = lazy(() => import("./routes/home.jsx"));
-const AuthPage = lazy(() => import("./routes/auth.jsx"));
-const Feed = lazy(() => import("./routes/feed.jsx"));
-const NotesIndex = lazy(() => import("./routes/notes/NotesContainer.jsx"));
-const Friends = lazy(() => import("./routes/friends/FriendsContainer.jsx"));
+const AuthPage = lazy(() => import("./features/auth/routes/AuthPage.jsx"));
+const Feed = lazy(() => import("./features/notes/routes/Feed.jsx"));
+const NotesIndex = lazy(() => import("./features/notes/routes/NotesContainer.jsx"));
+const Friends = lazy(() => import("./features/friendships/routes/FriendsContainer.jsx"));
 
 const router = createBrowserRouter([
   {
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       {
         element: <RequireGuest />,
         children: [
-          {path: "/login", element: <AuthPage /> },
+          { path: "/login", element: <AuthPage /> },
           { path: "/signup", element: <AuthPage /> },
         ]
       },
