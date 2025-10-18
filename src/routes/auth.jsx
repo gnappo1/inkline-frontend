@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuthActions } from "../hooks/useAuth";
@@ -23,7 +23,7 @@ function AuthPage() {
   const loc = useLocation();
   const { login, signup } = useAuthActions();
 
-  const [mode, setMode] = React.useState(
+  const [mode, setMode] = useState(
     loc.pathname.toLowerCase().includes("signup") ? "signup" : "login"
   );
   const isLogin = mode === "login";
@@ -33,7 +33,6 @@ function AuthPage() {
       ? "signup"
       : "login";
     if (want !== mode) setMode(want);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loc.pathname]);
 
   const switchMode = (next) => {

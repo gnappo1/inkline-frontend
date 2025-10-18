@@ -1,10 +1,9 @@
 import { Link, NavLink } from "react-router";
 import ThemeSlider from "./ThemeSlider";
-import { useAuthActions } from "../hooks/useAuth.js";
 import { useAuth } from "../auth/authProvider.jsx";
+import AccountMenu from "./AccountMenu.jsx";
 
 function Navbar({ onOpen, onClose }) {
-    const { logout } = useAuthActions?.() || { logout: null };
     const { data: user } = useAuth() || {};
 
     return (
@@ -22,27 +21,11 @@ function Navbar({ onOpen, onClose }) {
                     </NavLink>
                     {user ? (
                         <>
-                            <NavLink to="/notes" className="hover:opacity-80">
-                                My Notes
-                            </NavLink>
-                            <NavLink to="/friends" className="hover:opacity-80">
-                                Friends
-                            </NavLink>
-                            <NavLink to="/notes" className="hover:opacity-80">
+                            <NavLink to="/notes/new" className="hover:opacity-80">
                                 New Note
                             </NavLink>
-                            <button
-                                className="hover:opacity-80 logout-btn"
-                                onClick={async () => {
-                                    try {
-                                        await logout?.();
-                                    } finally {
-                                        onClose();
-                                    }
-                                }}
-                            >
-                                Logout
-                            </button>
+                            <AccountMenu />
+
                         </>
                     ) : (
                         <>

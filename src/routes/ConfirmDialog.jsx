@@ -30,13 +30,11 @@ function ConfirmDialog({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
             >
-                {/* Backdrop */}
                 <div
                     className="absolute inset-0 bg-black/50 backdrop-blur-sm"
                     onClick={closeOnBackdrop ? onCancel : undefined}
                 />
 
-                {/* Panel */}
                 <motion.div
                     className="relative w-[min(92vw,560px)] rounded-2xl bg-card border border-black/10 dark:border-white/10 p-6 shadow-xl"
                     initial={{ y: 20, scale: 0.98, opacity: 0 }}

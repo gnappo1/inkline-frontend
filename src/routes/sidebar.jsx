@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, NavLink } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAuth } from "../auth/authProvider.jsx";
@@ -64,6 +63,13 @@ function Sidebar({ open, onClose }) {
                   >
                     Friends
                   </NavLink>
+                  <NavLink
+                    to="/profile"
+                    onClick={onClose}
+                    className="block rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10"
+                  >
+                    Profile
+                  </NavLink>
                 </>
               ) : null}
             </nav>
@@ -89,7 +95,7 @@ function Sidebar({ open, onClose }) {
               ) : (
                 <>
                   <NavLink
-                    to="/notes"
+                    to="/notes/new"
                     onClick={onClose}
                     className="btn btn-primary w-full"
                   >

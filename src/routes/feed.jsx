@@ -1,5 +1,4 @@
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { api } from "../lib/api";
 import NoteCard from "./NoteCard.jsx";
@@ -10,9 +9,10 @@ import AnimatedWaveText from "./AnimatedWaveText.jsx";
 
 function Feed() {
     const qc = useQueryClient();
-    const [editing, setEditing] = useState(null);   // note object
-    const [deleting, setDeleting] = useState(null); // note object
+    const [editing, setEditing] = useState(null);
+    const [deleting, setDeleting] = useState(null);
     const { data: currentUser } = useAuth() || {};
+    const meId = Number(currentUser?.data?.id ?? currentUser?.id);
 
     const {
         data,
@@ -28,6 +28,24 @@ function Feed() {
         getNextPageParam: (last) => last?.next_cursor || undefined,
         initialPageParam: undefined,
     });
+
+    const friendshipsQuery = useQuery({
+        queryKey: ["friendships"],
+        queryFn: () => api.friendships(),
+    });
+
+    const friendIds = useMemo(() => {
+        const rows = friendshipsQuery.data?.data ?? [];
+        return new Set(
+            rows
+                .filter((r) => r.attributes.status === "accepted")
+                .map((r) => {
+                    const me = meId;
+                    const a = r.attributes;
+                    return Number(a.sender_id) === me ? Number(a.receiver_id) : Number(a.sender_id);
+                })
+        );
+    }, [friendshipsQuery.data, meId]);
 
     const items = useMemo(
         () => (data ? data.pages.flatMap((p) => p.data) : []),
@@ -47,10 +65,10 @@ function Feed() {
 
     return (
         <div className="max-w-3xl mx-auto p-4">
-            
+
             <AnimatedWaveText text="Public Feed" className="text-4xl md:text-5xl font-semibold mb-2" />
             <p className="text-mute mt-2 mb-6 md:mb-8">Fresh public notes from the community.</p>
-            
+
             <section className="space-y-4">
                 {items.map((n) => (
                     <NoteCard
@@ -58,7 +76,7 @@ function Feed() {
                         note={n}
                         onEdit={() => setEditing(n)}
                         onDelete={() => setDeleting(n)}
-                        // keep your provider shape: { data: user }
+                        isFriend={(id) => friendIds.has(Number(id))}
                         isOwner={String(currentUser?.id ?? currentUser?.data?.id) === String(n.author?.id)}
                     />
                 ))}
@@ -76,7 +94,6 @@ function Feed() {
                 )}
             </div>
 
-            {/* Edit modal */}
             {editing && (
                 <EditNoteModal
                     note={editing}
@@ -88,7 +105,6 @@ function Feed() {
                 />
             )}
 
-            {/* Delete confirm */}
             {deleting && (
                 <ConfirmDialog
                     title="Delete note?"
