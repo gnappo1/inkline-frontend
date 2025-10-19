@@ -327,8 +327,5 @@ SPA hosting must serve index.html for unknown routes (history API fallback).
 
 * Category filters on feed + personal notes
 * Avatars & profile cards
-* Optimistic updates for friendship ops
 * Search-as-you-type across more lists
 * Tests (RTL + MSW), CI pipeline
-
-
