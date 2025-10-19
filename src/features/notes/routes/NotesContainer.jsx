@@ -7,6 +7,7 @@ import { useAuth } from "../../auth/components/AuthProvider.jsx";
 import NoteCard from "../components/NoteCard.jsx";
 import EditNoteModal from "../components/EditNoteModal.jsx";
 import ConfirmDialog from "../../../shared/ui/ConfirmDialog.jsx";
+import { useToast } from "../../../shared/notifications/ToastProvider.jsx";
 
 function NotesContainer() {
   const qc = useQueryClient();
@@ -14,7 +15,7 @@ function NotesContainer() {
   const [editing, setEditing] = useState(null);
   const [deleting, setDeleting] = useState(null);
   const [filter, setFilter] = useState("all"); // 'all' | 'public' | 'private'
-
+  const { push } = useToast || { push: () => { } };
   const { data, status, error } = useQuery({
     queryKey: ["my-notes"],
     queryFn: () => api.myNotes(currentUser),
@@ -113,8 +114,10 @@ function NotesContainer() {
           onConfirm={async () => {
             await api.deleteNote(deleting.id);
             setDeleting(null);
+            push("Successfully deleted note", { variant: "success" });
             qc.invalidateQueries({ queryKey: ["my-notes"] });
             qc.invalidateQueries({ queryKey: ["feed"] });
+            
           }}
         />
       )}

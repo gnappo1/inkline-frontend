@@ -22,6 +22,7 @@ function AuthPage() {
   const nav = useNavigate();
   const loc = useLocation();
   const { login, signup } = useAuthActions();
+  const { push } = useToast() || { push: () => { } };
 
   const [mode, setMode] = useState(
     loc.pathname.toLowerCase().includes("signup") ? "signup" : "login"
@@ -88,6 +89,8 @@ function AuthPage() {
                   });
                 }
                 const dest = loc.state?.from?.pathname || "/feed";
+                push(isLogin ? "Welcome back!" : "Welcome to Inkline!", { variant: "success" });
+
                 nav(dest, { replace: true });
               } catch (e) {
                 const msg =
@@ -96,6 +99,7 @@ function AuthPage() {
                   e?.message ||
                   "Something went wrong";
                 helpers.setStatus(msg);
+                push(msg, { variant: "error" });
               } finally {
                 helpers.setSubmitting(false);
               }

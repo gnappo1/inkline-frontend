@@ -6,12 +6,14 @@ import EditNoteModal from "../components/EditNoteModal.jsx";
 import ConfirmDialog from "../../../shared/ui/ConfirmDialog.jsx";
 import { useAuth } from "../../auth/components/AuthProvider.jsx";
 import AnimatedWaveText from "../../../shared/ui/AnimatedWaveText.jsx";
+import { useToast } from "../../../shared/notifications/ToastProvider.jsx";
 
 function Feed() {
     const qc = useQueryClient();
     const [editing, setEditing] = useState(null);
     const [deleting, setDeleting] = useState(null);
     const { data: currentUser } = useAuth() || {};
+    const { push } = useToast() || { push: () => { } };
     const meId = Number(currentUser?.data?.id ?? currentUser?.id);
 
     const {
@@ -118,6 +120,7 @@ function Feed() {
                         await api.deleteNote(deleting.id);
                         setDeleting(null);
                         qc.invalidateQueries({ queryKey: ["feed"] });
+                        push("Successfully deleted note", { variant: "success" });
                     }}
                 />
             )}
