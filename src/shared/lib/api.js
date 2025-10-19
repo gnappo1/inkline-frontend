@@ -1,6 +1,6 @@
 import { flattenNotes } from "./jsonapi";
 
-const API = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+const API = import.meta.env.VITE_API_URL ?? "https://api.inkline.live";
 
 async function request(path, opts = {}) {
     const res = await fetch(API + path, {
