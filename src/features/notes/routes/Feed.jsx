@@ -32,6 +32,8 @@ function Feed() {
     const friendshipsQuery = useQuery({
         queryKey: ["friendships"],
         queryFn: () => api.friendships(),
+        enabled: !!meId,
+        retry: false
     });
 
     const friendIds = useMemo(() => {
